@@ -1,12 +1,12 @@
-import Login_Register from './login/Login_Register'
+import UserProvider from "./providers/UserProvider"
+import Application from './Application'
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      Exercise Log
-      <Login_Register/>
-    </div>
+    <UserProvider>
+      <Application/>
+    </UserProvider>
   );
 }
 
