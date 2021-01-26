@@ -6,12 +6,18 @@ const Login=()=>{
     const [email, setEmail] = useState('')
     const [password, setPassword]= useState('')
     const [error, setError]=useState(null)
-
+    const [partial, setPartial]=useState("")
+    
     const signInWithEmailAndPasswordHandler = (e,email,password)=>{
         e.preventDefault()
-        auth.signInWithEmailAndPassword(email,password).catch(err=>{
-            this.setState({error:"Error signing in with password and email."})
-            console.error(("Error signing in with password and email.", this.state.error))
+        setPartial("")
+        auth.signInWithEmailAndPassword(email,password).catch(error=>{
+            setError("Error signing in with password and email.")
+            setPartial(
+                <p>
+                    {error.message}
+                </p>
+            )
         })
     }
 
@@ -26,6 +32,7 @@ const Login=()=>{
         return(
             <div>
                 <h1>Sign In</h1>
+                {partial}
                 <form>
                     <label>Email:{" "}</label>
                     <input type="email" value={email} onChange={(e)=>upDateEmail(e)}/>
@@ -33,7 +40,7 @@ const Login=()=>{
                     <label>Password:{" "}</label>
                     <input type="password" value={password} onChange={(e)=>upDatePassword(e)}/>
                     <br></br>
-                    <button>Sign in</button>
+                    <button onClick={(e)=>{signInWithEmailAndPasswordHandler(e,email,password)}}>Sign in</button>
                     <br></br>
                     <p>
                         Don't have an account?{" "}
