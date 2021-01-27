@@ -2,6 +2,7 @@ import { BrowserRouter, Switch, Route, withRouter } from 'react-router-dom';
 import React,{useContext} from "react"
 
 import {UserContext} from "./providers/UserProvider"
+import Navbar from './navbar/Navbar'
 import Login from './login/Login'
 import Register from './login/Register'
 import ExerciseLogPage from './exercise-log/ExerciseLogPage'
@@ -13,14 +14,14 @@ function Application() {
   return (
     user?
       <div className="App">
-        Exercise Log
+        <Navbar/>
         <ExerciseLogPage/>
       </div>
       
     :
       <BrowserRouter>
         <div className="App">
-          Exercise Log
+          <Navbar/>
           <Switch>
             <Route exact path="/" component={Login}/>
             <Route path="/register" component={Register}/>

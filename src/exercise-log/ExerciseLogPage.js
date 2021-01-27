@@ -11,8 +11,7 @@ const ExerciseLogPage=()=>{
                 <h1>Hello!</h1>
                 <h2>{displayName}</h2>
                 <h3>{email}</h3>
-                <br></br>
-                <button className = "w-full py-3 bg-red-600 mt-4 text-white" onClick={()=>{auth.signOut()}}>Sign out</button>
+                
             </div>
         )
     
