@@ -156,8 +156,35 @@ const ExerciseLogPage=()=>{
 
     const deleteExercise=(e)=>{
         const id=e.target.id.split("-")[2]
-        console.log(id)
         console.log("delete exercise "+id)
+        let arr=[...exercises]
+        arr.splice(parseInt(id),1)
+        setExercises(arr)
+    }
+
+    const deleteLog=(e)=>{
+        console.log("delete log")
+        let splitted=date.split("-")
+        let new_date=`${splitted[1]}/${splitted[2]}/${splitted[0]}`
+        console.log(new_date)
+        let docs=firestore.collection('logs').where('date','==', new_date).where('uid','==',user.uid)
+        let empty=false
+        let doc_found
+        docs.get().then((querySnapshot)=>{
+            querySnapshot.forEach((doc)=>{
+                doc_found=doc
+            })
+            empty=querySnapshot.empty
+        }).then(()=>{
+            if(!empty){
+                firestore.collection('logs').doc(doc_found.id).delete().then(()=>{console.log("deleted doc")
+                setText('')
+                setExercises([])})
+                
+            }else{
+                console.log("doc doesn't exist")
+            }
+        })
     }
 
         return (
@@ -165,7 +192,8 @@ const ExerciseLogPage=()=>{
                 <h1>Log for {date}</h1>
                 <label>Change date: {" "}</label>
                 <input type="date" value={date} onChange={(e)=>upDateDate(e)}/>{" "}
-                <button onClick={(e)=>addExercise(e)}>Add an exercise</button>
+                <button onClick={(e)=>addExercise(e)}>Add an exercise</button>{" "}
+                <button onClick={(e)=>deleteLog(e)}>Delete log</button>
                 <br></br>
                 <h3>Exercises for the day</h3>
                 {
@@ -195,6 +223,9 @@ const ExerciseLogPage=()=>{
                 <textarea id="comment-box" type="text" value={text} onChange={(e)=>upDateText(e)}/>
                 <br></br><br></br>
                 <button onClick={(e)=>saveLog(e, date,text)}>Save</button>
+
+                <p>To ensure that changes made to a log are saved, click on Save.</p>
+                <p>Deleted logs are irretrievable.</p>
             </div>
         )
     
