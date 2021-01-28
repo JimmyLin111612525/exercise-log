@@ -44,7 +44,7 @@ const Register=()=>{
         return(
             <div>
                 <h1>
-                    Sign up
+                    Sign Up
                 </h1>
                 {partial}
                 <form>

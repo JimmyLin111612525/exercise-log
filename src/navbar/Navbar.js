@@ -11,13 +11,13 @@ const Navbar=()=>{
     return(
         user?
             <div>
-                Exercise Log{" "}
+                Rhine Log{" "}
                 {displayName}{" "}
                 <button onClick={()=>{auth.signOut()}}>Sign out</button>
             </div>
         :
             <div>
-                Exercise Log
+                Rhine Log
             </div>
     )
 }

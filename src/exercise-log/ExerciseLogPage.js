@@ -200,7 +200,8 @@ const ExerciseLogPage=()=>{
                     exercises.map((exercise,index)=>{
                         return(
                             <div id={`exercise-${index}`} key={`${index}`}>
-                                <label>Exercise: {" "}</label>
+                                <label>Exercise {index+1}: {" "}</label>
+                                <br></br>
                                 <input id={`exer-inp-${index}`} type="text" value={exercise.exer_name} onChange={(e)=>updateExercise(e)}/>{" "}
                                 <label>Weight:</label>{" "}
                                 <input id={`weight-inp-${index}`} type="number" value={exercise.weight} min="0" onChange={(e)=>updateWeight(e)}/>
@@ -221,9 +222,9 @@ const ExerciseLogPage=()=>{
                 <label>Notes:{" "}</label>
                 <br></br>
                 <textarea id="comment-box" type="text" value={text} onChange={(e)=>upDateText(e)}/>
-                <br></br><br></br>
+                <br></br>
                 <button onClick={(e)=>saveLog(e, date,text)}>Save</button>
-
+                <hr></hr>
                 <p>To ensure that changes made to a log are saved, click on Save.</p>
                 <p>Deleted logs are irretrievable.</p>
             </div>
