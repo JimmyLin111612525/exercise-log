@@ -13,14 +13,14 @@ function Application() {
   const user = useContext(UserContext);
   return (
     user?
-      <div className="App">
+      <div>
         <Navbar/>
         <ExerciseLogPage/>
       </div>
       
     :
       <BrowserRouter>
-        <div className="App">
+        <div>
           <Navbar/>
           <Switch>
             <Route exact path="/" component={Login}/>

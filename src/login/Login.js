@@ -1,6 +1,7 @@
-import React, {Component,useState} from 'react'
+import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
 import { auth } from '../Firestore'
+
 
 const Login=()=>{
     const [email, setEmail] = useState('')
@@ -14,7 +15,7 @@ const Login=()=>{
         auth.signInWithEmailAndPassword(email,password).catch(error=>{
             setError("Error signing in with password and email.")
             setPartial(
-                <p>
+                <p id="error">
                     {error.message}
                 </p>
             )
@@ -30,24 +31,38 @@ const Login=()=>{
     }
 
         return(
-            <div>
-                <h1>Sign In</h1>
-                {partial}
-                <form>
-                    <label>Email:{" "}</label>
-                    <input type="email" value={email} onChange={(e)=>upDateEmail(e)}/>
-                    <br></br>
-                    <label>Password:{" "}</label>
-                    <input type="password" value={password} onChange={(e)=>upDatePassword(e)}/>
-                    <br></br>
-                    <button onClick={(e)=>{signInWithEmailAndPasswordHandler(e,email,password)}}>Sign in</button>
-                    <br></br>
-                    <p>
-                        Don't have an account?{" "}
-                        <Link to='/register'>Register here</Link>
-                    </p>
+            <div className="log-in-frame">
+
+            
+                <div className="log-in">
+                    <span id="log-in-welcome">WELCOME</span>
+                    <p id="log-in-banner">Log into your account</p>
                     
-                </form>
+                    {partial}
+                    <form>
+                        <div className="login-info">
+                            <label className="e-mail">E-Mail</label>
+                        </div>
+                        
+                        <input type="email" value={email}  placeholder="Enter your email" onChange={(e)=>upDateEmail(e)}/>
+                        <br></br>
+                        <br></br>
+                        <div className="login-info">
+                            <label className="password login-info">Password</label>
+                        </div>
+                        <input type="password" value={password} placeholder="Enter your password" onChange={(e)=>upDatePassword(e)}/>
+                        <br></br>
+                        <br></br>
+                        <div className="log-in-button" onClick={(e)=>{signInWithEmailAndPasswordHandler(e,email,password)}}>Log in</div>
+                        <br></br>
+                        <div className="register-container">
+                            <p>
+                                Don't have an account?{" "}
+                                <Link id="register-link" to='/register'>Register here</Link>
+                            </p>
+                        </div>
+                    </form>
+                </div>
             </div>
         )
     
