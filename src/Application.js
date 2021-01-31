@@ -20,7 +20,7 @@ function Application() {
       
     :
       <BrowserRouter>
-        <div>
+        <div className="greeting-page-container">
           <Navbar/>
           <Switch>
             <Route exact path="/" component={Login}/>

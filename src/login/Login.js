@@ -31,39 +31,37 @@ const Login=()=>{
     }
 
         return(
-            <div className="log-in-frame">
-
-            
-                <div className="log-in">
-                    <span id="log-in-welcome">WELCOME</span>
-                    <p id="log-in-banner">Log into your account</p>
-                    
-                    {partial}
-                    <form>
-                        <div className="login-info">
-                            <label className="e-mail">E-Mail</label>
-                        </div>
+                <div className="log-in-frame">
+                    <div className="log-in">
+                        <span id="log-in-welcome">WELCOME</span>
+                        <p id="log-in-banner">Log into your account</p>
                         
-                        <input type="email" value={email}  placeholder="Enter your email" onChange={(e)=>upDateEmail(e)}/>
-                        <br></br>
-                        <br></br>
-                        <div className="login-info">
-                            <label className="password login-info">Password</label>
-                        </div>
-                        <input type="password" value={password} placeholder="Enter your password" onChange={(e)=>upDatePassword(e)}/>
-                        <br></br>
-                        <br></br>
-                        <div className="log-in-button" onClick={(e)=>{signInWithEmailAndPasswordHandler(e,email,password)}}>Log in</div>
-                        <br></br>
-                        <div className="register-container">
-                            <p>
-                                Don't have an account?{" "}
-                                <Link id="register-link" to='/register'>Register here</Link>
-                            </p>
-                        </div>
-                    </form>
+                        {partial}
+                        <form>
+                            <div className="login-info">
+                                <label className="e-mail">E-Mail</label>
+                            </div>
+                            
+                            <input type="email" value={email}  placeholder="Enter your e-mail" onChange={(e)=>upDateEmail(e)}/>
+                            <br></br>
+                            <br></br>
+                            <div className="login-info">
+                                <label className="password login-info">Password</label>
+                            </div>
+                            <input type="password" value={password} placeholder="Enter your password" onChange={(e)=>upDatePassword(e)}/>
+                            <br></br>
+                            <br></br>
+                            <div className="log-in-button" onClick={(e)=>{signInWithEmailAndPasswordHandler(e,email,password)}}>Log in</div>
+                            <br></br>
+                            <div className="register-container">
+                                <p>
+                                    Don't have an account?{" "}
+                                    <Link id="register-link" to='/register'>Register here</Link>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
         )
     
 }

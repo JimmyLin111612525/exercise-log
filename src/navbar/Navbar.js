@@ -30,7 +30,6 @@ const Navbar=()=>{
             <>
                 <div className="logo-container" onClick={(e)=>logoClick(e)}>
                     <img src={rhine} alt="Rhine Log"/>
-                    <span id="rhine-logo-log">LOG</span>
                 </div>
             </>
     )
