@@ -14,7 +14,7 @@ const Register=()=>{
         setPartial("")
         try{
             const {user} = await auth.createUserWithEmailAndPassword(email,password)
-            generateUserDocument(user, {displayName,password})
+            generateUserDocument(user, {password})
         }catch(error){
             setError("Error signing up with email and password")
             setPartial(
@@ -26,7 +26,6 @@ const Register=()=>{
 
         setEmail("")
         setPassword("")
-        setDisplayName("")
     }
 
     const upDateDisplayName=(e)=>{
@@ -49,12 +48,6 @@ const Register=()=>{
                     </p>
                     {partial}
                     <form>
-                        <div className="register-info">
-                            <label className="username"> Username:{" "}</label>
-                        </div>
-                        <input type="text" value={displayName} placeholder="Enter a username" onChange={(e)=>upDateDisplayName(e)}/>
-                        <br></br>
-                            <br></br>
                         <div className="register-info">
                             <label className="e-mail">Email:{" "}</label>
                         </div>

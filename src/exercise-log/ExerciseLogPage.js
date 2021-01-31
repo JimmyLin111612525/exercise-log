@@ -8,7 +8,8 @@ const ExerciseLogPage=()=>{
     const[exercises,setExercises]=useState([])
 
     const user=useContext(UserContext)
-
+    const{email}=user
+    
     useEffect(()=>{
         let today = new Date();
         let dd = String(today.getDate()).padStart(2, '0');
@@ -112,14 +113,6 @@ const ExerciseLogPage=()=>{
         setExercises(exercises.concat(exercise))
         console.log(exercises)
     }
-
-    // const updateMetric=(e)=>{
-    //     const id=e.target.id.split("-")[2]
-    //     let arr=[...exercises]
-    //     arr[parseInt(id)]={...arr[parseInt(id)],metric:e.target.value}
-    //     setExercises(arr)
-    //     console.log(exercises)
-    // }
 
     const updateExercise=(e)=>{
         const id=e.target.id.split("-")[2]

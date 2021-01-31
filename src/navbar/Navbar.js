@@ -9,9 +9,9 @@ const Navbar=()=>{
     var img=document.createElement("img")
     img.src="rhine-logo.png"
     const user=useContext(UserContext)
-    let displayName=""
+    let email=""
     if(user){
-        displayName=user.displayName
+        email=user.email
     }
 
     const logoClick=(e)=>{
@@ -23,7 +23,7 @@ const Navbar=()=>{
         user?
             <div>
                 Rhine Log{" "}
-                {displayName}{" "}
+                {email}{" "}
                 <button onClick={()=>{auth.signOut()}}>Sign out</button>
             </div>
         :
