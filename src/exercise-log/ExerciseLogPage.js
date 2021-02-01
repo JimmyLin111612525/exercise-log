@@ -215,11 +215,11 @@ function ExerciseLogPage(){
 
         return (
             <div className="exercise-log-page">
-                <h1>Log for {date}</h1>
-                <label>Change date: {" "}</label>
-                <input type="date" value={date} onChange={(e)=>upDateDate(e)}/>{" "}
-                <button onClick={(e)=>addExercise(e)}>{size.width>breakpoint?"Add an exercise":"+"}</button>{" "}
-                <button onClick={(e)=>deleteLog(e)}>{size.width>breakpoint?"Delete log":"-"}</button>
+                <h1>{size.width>breakpoint?"Log for ":""}{`${date.split("-")[1]}/${date.split("-")[2]}/${date.split("-")[0]}`}</h1>
+                <label>Date: {" "}</label>
+                <input class="date-picker" type="date" value={date} onChange={(e)=>upDateDate(e)}/>{" "}
+                <div id="add-exer-button" onClick={(e)=>addExercise(e)}>{size.width>breakpoint?"Add an exercise":"+"}</div>{" "}
+                <div id="del-exer-button" onClick={(e)=>deleteLog(e)}>{size.width>breakpoint?"Delete log":"-"}</div>
                 <br></br>
                 <h3>Exercises for the day</h3>
                 {
@@ -227,22 +227,22 @@ function ExerciseLogPage(){
                         return(
                             <div className="exercises" id={`exercise-${index}`} key={`${index}`}>
                                 <div className="exercise-label-container">
-                                    <span className="exercise-label">Exercise {index+1}: {" "}</span>
+                                    <span className="exercise-label">{size.width>breakpoint?"Exercise ":""}{index+1}: {" "}</span>
                                     <input class="exer-inp" id={`exer-inp-${index}`} type="text" value={exercise.exer_name} placeholder="Enter the name of the exercise" onChange={(e)=>updateExercise(e)}/>{" "}
                                 </div>
                                 <div className="exercise-specs"> 
                                     <div>
-                                    <label>Weight:</label>{" "}
+                                    <label className="exer-spec" >Weight:</label>{" "}
                                     <input id={`weight-inp-${index}`} type="number" value={exercise.weight} min="0" onChange={(e)=>updateWeight(e)}/>
                                     
                                     {" "}
                                     </div>
                                     <div>
-                                    <label>Sets:</label>{" "}
+                                    <label className="exer-spec">Sets:</label>{" "}
                                     <input id={`sets-inp-${index}`} type="number" min="0" value={exercise.sets} onChange={(e)=>updateSets(e)}/>{" "}
                                     </div>
                                     <div>
-                                        <label>Reps:</label>{" "}
+                                    <label className="exer-spec">Reps:</label>{" "}
                                     <input id={`reps-inp-${index}`} type="number" min="0" value={exercise.reps} onChange={(e)=>updateReps(e)}/>{" "}
                                     </div>
                                 </div>
@@ -260,7 +260,7 @@ function ExerciseLogPage(){
                 <br></br>
                 <textarea id="comment-box" type="text" value={text} onChange={(e)=>upDateText(e)}/>
                 <br></br>
-                <button onClick={(e)=>saveLog(e, date,text)}>Save</button>
+                <div id="save-button" onClick={(e)=>saveLog(e, date,text)}>Save log</div>
                 <hr></hr>
                 <p>To ensure that changes made to a log are saved, click on Save.</p>
                 <p>Deleted logs are irretrievable.</p>

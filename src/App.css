@@ -56,6 +56,14 @@ input[type="email"],input[type="password"], input[type="text"]{
   height:35px;
 }
 
+input[type="number"]{
+  background-color: #363636;
+  border: 1px solid #535353;
+  outline:none;
+  border-radius:5px;
+  color:white;
+}
+
 .login-info, .register-info{
   font-size: 13px;
   width:100%;
@@ -194,7 +202,7 @@ input[class="exer-inp"]{
   color:rgb(146, 28, 28);
 }
 
-.delete-exercise:hover{
+.delete-exercise:hover,#add-exer-button:hover,#del-exer-button:hover{
   cursor: pointer;
 }
 
@@ -213,7 +221,64 @@ input[class="exer-inp"]{
   background-color:rgb(146, 28, 28);
 }
 
+#add-exer-button, #del-exer-button{
+  display: inline;
+  
+  padding:5px;
+  border-radius:5px;
+}
 
+#add-exer-button{
+  background-color: rgb(85,217,124);
+}
+
+#del-exer-button{
+  background-color: rgb(230,60,79);
+}
+
+#add-exer-button:active{
+  background-color: rgb(58,156,87);
+}
+
+.date-picker{
+  background-color: #363636;
+  border: 1px solid #535353;
+  outline:none;
+  border-radius:5px;
+  color:white;
+  margin-left:5px;
+}
+
+.exer-spec{
+  margin-left:10px;
+}
+
+#save-button{
+  background-color: #297ed3;
+  border-radius:5px;
+  color:white;
+  display: inline;
+  padding:5px;
+}
+
+#save-button:hover{
+  cursor: pointer;
+}
+
+#save-button:active{
+  background-color: #1f63a6;
+}
+
+#comment-box{
+  background-color: #363636;
+  border: 1px solid #535353;
+  border-radius:5px;
+  color:white;
+}
+
+#profile-logo:hover{
+  cursor: pointer;
+}
 
 @media (max-width: 500px){
   .logo-container{
