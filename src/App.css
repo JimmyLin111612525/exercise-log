@@ -76,6 +76,12 @@ input[type="email"],input[type="password"], input[type="text"]{
 
 .log-in-button:hover,.register-button:hover{
   cursor: pointer;
+  
+}
+
+.log-in-button:active,.register-button:active{
+  background-color: #1f63a6;
+  
 }
 
 #error{
@@ -120,10 +126,94 @@ input[type="email"],input[type="password"], input[type="text"]{
 }
 
 img{
-  -webkit-filter:drop-shadow(5px 5px 5px #000);
-  filter: drop-shadow(5px 15px 5px #000);
+  -webkit-filter:drop-shadow(5px 15px 5px #000);
+  filter: drop-shadow(5px 15px 5px rgb(0, 0, 0));
   height:20px;
 }
+
+.profile-page-container{
+  background-color: #1a1a1a;
+}
+
+#comment-box{
+  resize: both;
+  max-width: 53.5%;
+}
+
+.exercises{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  padding:20px;
+}
+
+.exercise-label-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+  margin-bottom: 10px;
+}
+
+input[class="exer-inp"]{
+  width:50%;
+  margin-left:10px;
+}
+
+.exercise-specs{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+#profile-nav{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin:20px;
+  align-items:center;
+  text-transform: uppercase;
+}
+
+#email-nav{
+  margin-left: auto;
+  margin-bottom:auto;
+  margin-top:auto;
+  margin-right:10px;
+}
+
+.delete-exercise{
+  color:rgb(192, 36, 36);
+}
+
+.delete-exercise:active{
+  color:rgb(146, 28, 28);
+}
+
+.delete-exercise:hover{
+  cursor: pointer;
+}
+
+.sign-out{
+  font-size: 13px;
+  background-color: #e02323;
+  border-radius:3px;
+  padding:0 5px 0 5px;
+}
+
+.sign-out:hover{
+  cursor: pointer;
+}
+
+.sign-out:active{
+  background-color:rgb(146, 28, 28);
+}
+
+
 
 @media (max-width: 500px){
   .logo-container{
@@ -135,3 +225,4 @@ img{
     padding-right: 5px;
   }  
 }
+

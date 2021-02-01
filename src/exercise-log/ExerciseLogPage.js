@@ -2,7 +2,40 @@ import React, {useContext,useEffect,useState} from 'react'
 import { auth, firestore } from '../Firestore'
 import { UserContext } from '../providers/UserProvider'
 
-const ExerciseLogPage=()=>{
+function useWindowSize() {
+    // Initialize state with undefined width/height so server and client renders match
+    const [windowSize, setWindowSize] = useState({
+      width: undefined,
+      height: undefined,
+    });
+  
+    useEffect(() => {
+      // Handler to call on window resize
+      function handleResize() {
+        // Set window width/height to state
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      }
+      
+      // Add event listener
+      window.addEventListener("resize", handleResize);
+      
+      // Call handler right away so state gets updated with initial window size
+      handleResize();
+      
+      // Remove event listener on cleanup
+      return () => window.removeEventListener("resize", handleResize);
+    }, []); // Empty array ensures that effect is only run on mount
+  
+    return windowSize;
+  }
+
+
+function ExerciseLogPage(){
+    const size=useWindowSize()
+    const breakpoint=540;
     const[text,setText]=useState('')
     const[date,setDate]=useState('')
     const[exercises,setExercises]=useState([])
@@ -181,32 +214,43 @@ const ExerciseLogPage=()=>{
     }
 
         return (
-            <div>
+            <div className="exercise-log-page">
                 <h1>Log for {date}</h1>
                 <label>Change date: {" "}</label>
                 <input type="date" value={date} onChange={(e)=>upDateDate(e)}/>{" "}
-                <button onClick={(e)=>addExercise(e)}>Add an exercise</button>{" "}
-                <button onClick={(e)=>deleteLog(e)}>Delete log</button>
+                <button onClick={(e)=>addExercise(e)}>{size.width>breakpoint?"Add an exercise":"+"}</button>{" "}
+                <button onClick={(e)=>deleteLog(e)}>{size.width>breakpoint?"Delete log":"-"}</button>
                 <br></br>
                 <h3>Exercises for the day</h3>
                 {
                     exercises.map((exercise,index)=>{
                         return(
-                            <div id={`exercise-${index}`} key={`${index}`}>
-                                <label>Exercise {index+1}: {" "}</label>
-                                <br></br>
-                                <input id={`exer-inp-${index}`} type="text" value={exercise.exer_name} onChange={(e)=>updateExercise(e)}/>{" "}
-                                <label>Weight:</label>{" "}
-                                <input id={`weight-inp-${index}`} type="number" value={exercise.weight} min="0" onChange={(e)=>updateWeight(e)}/>
-                                
-                                {" "}
-                                <label>Sets:</label>{" "}
-                                <input id={`sets-inp-${index}`} type="number" min="0" value={exercise.sets} onChange={(e)=>updateSets(e)}/>{" "}
-                                <label>Reps:</label>{" "}
-                                <input id={`reps-inp-${index}`} type="number" min="0" value={exercise.reps} onChange={(e)=>updateReps(e)}/>{" "}
-                                <span id={`del-exer-${index}`} onClick={(e)=>{deleteExercise(e)}}>-</span>
-                                <br></br>
-                                <br></br>
+                            <div className="exercises" id={`exercise-${index}`} key={`${index}`}>
+                                <div className="exercise-label-container">
+                                    <span className="exercise-label">Exercise {index+1}: {" "}</span>
+                                    <input class="exer-inp" id={`exer-inp-${index}`} type="text" value={exercise.exer_name} placeholder="Enter the name of the exercise" onChange={(e)=>updateExercise(e)}/>{" "}
+                                </div>
+                                <div className="exercise-specs"> 
+                                    <div>
+                                    <label>Weight:</label>{" "}
+                                    <input id={`weight-inp-${index}`} type="number" value={exercise.weight} min="0" onChange={(e)=>updateWeight(e)}/>
+                                    
+                                    {" "}
+                                    </div>
+                                    <div>
+                                    <label>Sets:</label>{" "}
+                                    <input id={`sets-inp-${index}`} type="number" min="0" value={exercise.sets} onChange={(e)=>updateSets(e)}/>{" "}
+                                    </div>
+                                    <div>
+                                        <label>Reps:</label>{" "}
+                                    <input id={`reps-inp-${index}`} type="number" min="0" value={exercise.reps} onChange={(e)=>updateReps(e)}/>{" "}
+                                    </div>
+                                </div>
+                                    <br></br>
+                                    <div>
+                                        <span className="delete-exercise" id={`del-exer-${index}`} onClick={(e)=>{deleteExercise(e)}}>Remove Exercise {index+1}</span>
+                                        </div>
+                                    <br></br>
                             </div>
                         )
                     })
