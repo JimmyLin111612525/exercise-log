@@ -236,6 +236,10 @@ input[class="exer-inp"]{
   background-color: rgb(230,60,79);
 }
 
+#del-exer-button:active{
+  background-color: rgb(173,43,58);
+}
+
 #add-exer-button:active{
   background-color: rgb(58,156,87);
 }
@@ -278,6 +282,39 @@ input[class="exer-inp"]{
 
 #profile-logo:hover{
   cursor: pointer;
+}
+
+#confirmation{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top:20px;
+}
+
+#confirm-del{
+  background-color: rgb(85,217,124);
+  padding:0 5px 0 5px;
+  border-radius:5px;
+}
+
+#reject-del{
+  margin-left:50px;
+  background-color: rgb(230,60,79);
+  padding:0 5px 0 5px;
+  border-radius:5px;
+}
+
+#confirm-del:hover,#reject-del:hover{
+  cursor: pointer;
+}
+
+#confirm-del:active{
+  background-color: rgb(58,156,87);
+}
+
+#reject-del:active{
+  background-color: rgb(173,43,58);
 }
 
 @media (max-width: 500px){

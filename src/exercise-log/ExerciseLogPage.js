@@ -2,6 +2,9 @@ import React, {useContext,useEffect,useState} from 'react'
 import { auth, firestore } from '../Firestore'
 import { UserContext } from '../providers/UserProvider'
 
+
+import DeleteLogModal from "../modal/DeleteLogModal"
+
 function useWindowSize() {
     // Initialize state with undefined width/height so server and client renders match
     const [windowSize, setWindowSize] = useState({
@@ -39,6 +42,8 @@ function ExerciseLogPage(){
     const[text,setText]=useState('')
     const[date,setDate]=useState('')
     const[exercises,setExercises]=useState([])
+    const[empty,setEmpty]=useState(false)
+    const[isOpen,setIsOpen]=useState(false)
 
     const user=useContext(UserContext)
     const{email}=user
@@ -63,12 +68,15 @@ function ExerciseLogPage(){
             if (empty){
                 setText('')
                 setExercises([])
+                setEmpty(true)
             }else{
                 firestore.collection('logs').doc(doc_found.id).get().then((d)=>{
                     setText(d.data().text)
                     setExercises(JSON.parse(d.data().exercises))
+                    setEmpty(false)
                     //console.log(d.data().exercises)
                 })
+                
             }
         })
     },[])
@@ -79,6 +87,7 @@ function ExerciseLogPage(){
     }
 
     const upDateDate=(e)=>{
+        
         let splitted=e.target.value.split("-")
         let new_date=`${splitted[1]}/${splitted[2]}/${splitted[0]}`
 
@@ -95,12 +104,14 @@ function ExerciseLogPage(){
             if(empty){
                 setText('')
                 setExercises([])
+                setEmpty(true)
                 console.log("no log")
             }
             else{
                 firestore.collection('logs').doc(doc_found.id).get().then((d)=>{
                     setText(d.data().text)
                     setExercises(JSON.parse(d.data().exercises))
+                    setEmpty(false)
                     console.log(d.data().exercises)
                 })
             }
@@ -109,6 +120,9 @@ function ExerciseLogPage(){
     }
 
     const saveLog=(e,date,text)=>{
+        if(exercises.length===0){
+            return
+        }
         let splitted=date.split("-")
         let new_date=`${splitted[1]}/${splitted[2]}/${splitted[0]}`
         console.log(new_date)
@@ -124,10 +138,12 @@ function ExerciseLogPage(){
             if(empty){
                 console.log("make new document")
                 firestore.collection('logs').doc().set({date:new_date,text:text.trim(),uid:user.uid,exercises:JSON.stringify(exercises)})
+                setEmpty(false)
             }
             else{
                 console.log("update document")
                 firestore.collection('logs').doc(doc_found.id).update({text:text.trim(),exercises:JSON.stringify(exercises)})
+                setEmpty(false)
             }
         })
         console.log(text,", ",new_date)
@@ -206,7 +222,8 @@ function ExerciseLogPage(){
                 firestore.collection('logs').doc(doc_found.id).delete().then(()=>{console.log("deleted doc")
                 setText('')
                 setExercises([])})
-                
+                setEmpty(true)
+                setIsOpen(false)
             }else{
                 console.log("doc doesn't exist")
             }
@@ -219,7 +236,9 @@ function ExerciseLogPage(){
                 <label>Date: {" "}</label>
                 <input class="date-picker" type="date" value={date} onChange={(e)=>upDateDate(e)}/>{" "}
                 <div id="add-exer-button" onClick={(e)=>addExercise(e)}>{size.width>breakpoint?"Add an exercise":"+"}</div>{" "}
-                <div id="del-exer-button" onClick={(e)=>deleteLog(e)}>{size.width>breakpoint?"Delete log":"-"}</div>
+                {!empty && 
+                <div id="del-exer-button" onClick={()=>setIsOpen(true)}>{size.width>breakpoint?"Delete log":"-"}</div>
+                }
                 <br></br>
                 <h3>Exercises for the day</h3>
                 {
@@ -263,7 +282,11 @@ function ExerciseLogPage(){
                 <div id="save-button" onClick={(e)=>saveLog(e, date,text)}>Save log</div>
                 <hr></hr>
                 <p>To ensure that changes made to a log are saved, click on Save.</p>
-                <p>Deleted logs are irretrievable.</p>
+
+                <DeleteLogModal open={isOpen} onClose={()=>setIsOpen(false)} confirmDel={deleteLog}>
+                    Are you sure you want to delete this log? Deleted logs are irretrievable.
+                </DeleteLogModal>
+
             </div>
         )
     
