@@ -120,9 +120,7 @@ function ExerciseLogPage(){
     }
 
     const saveLog=(e,date,text)=>{
-        if(exercises.length===0){
-            return
-        }
+        
         let splitted=date.split("-")
         let new_date=`${splitted[1]}/${splitted[2]}/${splitted[0]}`
         console.log(new_date)
@@ -135,7 +133,11 @@ function ExerciseLogPage(){
             })
             empty=querySnapshot.empty
         }).then(()=>{
+            
             if(empty){
+                if(exercises.length===0){
+                    return
+                }
                 console.log("make new document")
                 firestore.collection('logs').doc().set({date:new_date,text:text.trim(),uid:user.uid,exercises:JSON.stringify(exercises)})
                 setEmpty(false)
@@ -230,6 +232,37 @@ function ExerciseLogPage(){
         })
     }
 
+    const moveExerUp=(e)=>{
+        const id=e.target.id.split("-")[2]
+        
+
+        const index=parseInt(id);
+        
+        let arr=[...exercises]
+        if(index>0){
+            console.log(`move exercise ${index} up`)
+            let temp=arr[index-1]
+            arr[index-1]=arr[index]
+            arr[index]=temp
+            setExercises(arr)
+        }
+    }
+
+    const moveExerDown=(e)=>{
+        const id=e.target.id.split("-")[2]
+        const index=parseInt(id);
+        
+        let arr=[...exercises]
+        console.log(arr.length)
+        if(index<arr.length-1){
+            console.log(`move exercise ${index} down`)
+            let temp=arr[index+1]
+            arr[index+1]=arr[index]
+            arr[index]=temp
+            setExercises(arr)
+        }
+    }
+
         return (
             <div className="exercise-log-page">
                 <h1>{size.width>breakpoint?"Log for ":""}{`${date.split("-")[1]}/${date.split("-")[2]}/${date.split("-")[0]}`}</h1>
@@ -240,7 +273,9 @@ function ExerciseLogPage(){
                 <div id="del-exer-button" onClick={()=>setIsOpen(true)}>{size.width>breakpoint?"Delete log":"-"}</div>
                 }
                 <br></br>
-                <h3>Exercises for the day</h3>
+                <br></br>
+                {exercises.length>0?<h3>Exercises for the day</h3>:""}
+                
                 {
                     exercises.map((exercise,index)=>{
                         return(
@@ -266,9 +301,12 @@ function ExerciseLogPage(){
                                     </div>
                                 </div>
                                     <br></br>
-                                    <div>
-                                        <span className="delete-exercise" id={`del-exer-${index}`} onClick={(e)=>{deleteExercise(e)}}>Remove Exercise {index+1}</span>
-                                        </div>
+                                    <div className="exercise-options">
+                                        
+                                        <div className="move-exer-up" id={`move-up-${index}`} onClick={(e)=>{moveExerUp(e)}}>Move up</div>
+                                        <div className="move-exer-down" id={`move-down-${index}`} onClick={(e)=>{moveExerDown(e)}}>Move down</div>
+                                        <div className="delete-exercise" id={`del-exer-${index}`} onClick={(e)=>{deleteExercise(e)}}>Remove Exercise</div>
+                                    </div>
                                     <br></br>
                             </div>
                         )

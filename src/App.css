@@ -153,6 +153,7 @@ img{
   flex-direction: column;
   align-items: center;
   padding:20px;
+  border: 1px solid #535353;
 }
 
 .exercise-label-container{
@@ -202,7 +203,7 @@ input[class="exer-inp"]{
   color:rgb(146, 28, 28);
 }
 
-.delete-exercise:hover,#add-exer-button:hover,#del-exer-button:hover{
+.delete-exercise:hover,#add-exer-button:hover,#del-exer-button:hover,.move-exer-down:hover,.move-exer-up:hover{
   cursor: pointer;
 }
 
@@ -315,6 +316,29 @@ input[class="exer-inp"]{
 
 #reject-del:active{
   background-color: rgb(173,43,58);
+}
+
+.exercise-options{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items:center;
+  width:45%;
+}
+
+.move-exer-up,.move-exer-down,.delete-exercise{
+  margin:10px;
+}
+
+.move-exer-up,.move-exer-down,.delete-exercise{
+  background-color: #363636;
+  border: 1px solid #535353;
+  border-radius:5px;
+  padding:0 5px 0 5px;
+}
+
+.move-exer-up:active,.move-exer-down:active,.delete-exercise:active{
+  background-color: #242424;
 }
 
 @media (max-width: 500px){
