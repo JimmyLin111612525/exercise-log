@@ -154,6 +154,9 @@ img{
   align-items: center;
   padding:20px;
   border: 1px solid #535353;
+  border-left-style:none;
+  border-right-style:none;
+  border-bottom-style:none;
 }
 
 .exercise-label-container{
