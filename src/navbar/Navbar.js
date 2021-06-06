@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react'
 import { auth } from '../Firestore'
-import { UserContext } from '../providers/UserProvider'
+import { UserContext } from '../UserContext'
 import rhine from "./rhine-logo.png"
 import {useHistory} from 'react-router-dom'
 import { ViewPortContext } from '../providers/ViewPortProvider'
@@ -41,11 +41,12 @@ function Navbar(){
     const history=useHistory();
     var img=document.createElement("img")
     img.src="rhine-logo.png"
-    const user=useContext(UserContext)
+    const {user}=useContext(UserContext)
+    const [userEntered,setUserEntered]=user
     const viewport=useContext(ViewPortContext)
     let email=""
-    if(user){
-        email=user.email
+    if(userEntered){
+        email=userEntered.email
     }   
     
     const logoClick=(e)=>{
@@ -54,7 +55,7 @@ function Navbar(){
     }
 
     return(
-        user?
+      userEntered?
             <div>
                 <div id="profile-nav">
                     <img id="profile-logo" onClick={(e)=>logoClick(e)} src={rhine} alt="Rhine Log"/>

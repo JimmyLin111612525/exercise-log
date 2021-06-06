@@ -3,11 +3,17 @@ import { Link } from 'react-router-dom'
 import { auth, generateUserDocument } from "../Firestore"
 import BarLoader from "react-spinners/BarLoader";
 
+import {UserContext} from "../UserContext"
+
 const Register = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [partial, setPartial] = useState("")
     const [loading, setLoading] = useState(null)
+
+    const {user} = useContext(UserContext)
+
+    const[userEntered,setUserEntered]=user
 
     const createUserWithEmailAndPasswordHandler = async (e, email, password) => {
         e.preventDefault()
@@ -56,6 +62,8 @@ const Register = () => {
                             An existing user has that email. Please use another email.
                         </p>
                     )
+                }else{
+                    setUserEntered(email)
                 }
                 setLoading(false)
             }

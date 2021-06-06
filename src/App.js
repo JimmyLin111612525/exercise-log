@@ -1,4 +1,4 @@
-import UserProvider from "./providers/UserProvider"
+import {UserProvider} from "./UserContext"
 
 import Application from './Application'
 import './App.css';

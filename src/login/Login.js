@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { Component, useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { auth } from '../Firestore'
 
 import BarLoader from "react-spinners/BarLoader";
 
+import {UserContext} from "../UserContext"
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -11,10 +12,14 @@ const Login = () => {
     const [partial, setPartial] = useState("")
     const [loading, setLoading] = useState(null)
 
+    const { user } = useContext(UserContext)
+
+    const [userEntered, setUserEntered] = user
+
     const signInWithEmailAndPasswordHandler = (e, email, password) => {
         e.preventDefault()
         setPartial("")
-        
+
         if (email === "") {
             setPartial(
                 <p id="error">
@@ -48,11 +53,13 @@ const Login = () => {
                             Email and/or password incorrect.
                         </p>
                     )
-                    setLoading(false);
+                    
                 }
                 else if (res.target.responseText === "user-found") {
                     console.log('user exists')
+                    setUserEntered(email)
                 }
+                setLoading(false);
             }
         }
         request.open("GET", `http://localhost:8080/bigQueryServer-1.0-SNAPSHOT/api/controller/login/email=${email}&password=${password}`, true);
