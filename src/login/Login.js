@@ -4,7 +4,7 @@ import { auth } from '../Firestore'
 
 import BarLoader from "react-spinners/BarLoader";
 
-import {UserContext} from "../UserContext"
+import { UserContext } from "../UserContext"
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -12,9 +12,10 @@ const Login = () => {
     const [partial, setPartial] = useState("")
     const [loading, setLoading] = useState(null)
 
-    const { user } = useContext(UserContext)
+    const { user, date } = useContext(UserContext)
 
     const [userEntered, setUserEntered] = user
+    const [curDate, setCurDate] = date
 
     const signInWithEmailAndPasswordHandler = (e, email, password) => {
         e.preventDefault()
@@ -53,10 +54,14 @@ const Login = () => {
                             Email and/or password incorrect.
                         </p>
                     )
-                    
+
+                } else if (res.target.responseText === "something happened") {
+                    console.log("something happened")
                 }
-                else if (res.target.responseText === "user-found") {
+                else {
                     console.log('user exists')
+                    console.log(res.target.responseText)
+                    setCurDate(res.target.responseText)
                     setUserEntered(email)
                 }
                 setLoading(false);
