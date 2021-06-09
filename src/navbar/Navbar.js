@@ -54,13 +54,27 @@ function Navbar(){
         history.push('/')
     }
 
+    const signOut=(e)=>{
+      setUserEntered(null)
+      let request = new XMLHttpRequest();
+        
+        request.onreadystatechange = (res) => {
+            if (res.target.readyState == 4 && res.target.status == 200) {
+                console.log(res.target.responseText)
+            }
+        }
+        request.open("GET", `http://localhost:8080/bigQueryServer-1.0-SNAPSHOT/api/controller/signOut`, true);
+        request.send();
+      console.log("sign out")
+    }
+
     return(
       userEntered?
             <div>
                 <div id="profile-nav">
                     <img id="profile-logo" onClick={(e)=>logoClick(e)} src={rhine} alt="Rhine Log"/>
                         <p id="email-nav">{size.width>breakpoint?email:""}</p>
-                        <div className="sign-out" onClick={()=>{auth.signOut()}}>Sign out</div>
+                        <div className="sign-out" onClick={signOut}>Sign out</div>
                 </div>
                 
             </div>

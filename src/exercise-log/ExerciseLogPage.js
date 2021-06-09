@@ -101,40 +101,14 @@ function ExerciseLogPage() {
     }
 
     const saveLog = (e, date, text) => {
-
-        // let splitted=date.split("-")
-        // let new_date=`${splitted[1]}/${splitted[2]}/${splitted[0]}`
-        // console.log(new_date)
-        // let docs=firestore.collection('logs').where('date','==', new_date).where('uid','==',user.uid)
-        // let empty=false
-        // let doc_found
-        // docs.get().then((querySnapshot)=>{
-        //     querySnapshot.forEach((doc)=>{
-        //         doc_found=doc
-        //     })
-        //     empty=querySnapshot.empty
-        // }).then(()=>{
-
-        //     if(empty){
-        //         if(exercises.length===0){
-        //             return
-        //         }
-        //         console.log("make new document")
-        //         firestore.collection('logs').doc().set({date:new_date,text:text.trim(),uid:user.uid,exercises:JSON.stringify(exercises)})
-        //         setEmpty(false)
-        //     }
-        //     else{
-        //         console.log("update document")
-        //         firestore.collection('logs').doc(doc_found.id).update({text:text.trim(),exercises:JSON.stringify(exercises)})
-        //         setEmpty(false)
-        //     }
-        // })
         console.log(exercises)
+        setLoading(true)
         let request = new XMLHttpRequest();
         request.onreadystatechange = (res) => {
             if (res.target.readyState == 4 && res.target.status == 200) {
                 console.log(res.target.responseText)
             }
+            setLoading(false)
         }
         request.open("GET", `http://localhost:8080/bigQueryServer-1.0-SNAPSHOT/api/controller/saveLog/exercises=${JSON.stringify(exercises)}&text=${text}`, true);
         request.send();
@@ -196,31 +170,20 @@ function ExerciseLogPage() {
     }
 
     const deleteLog = (e) => {
+        setIsOpen(false)
         console.log("delete log")
-        let splitted = date.split("-")
-        let new_date = `${splitted[1]}/${splitted[2]}/${splitted[0]}`
-        console.log(new_date)
-        let docs = firestore.collection('logs').where('date', '==', new_date).where('uid', '==', user.uid)
-        let empty = false
-        let doc_found
-        docs.get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                doc_found = doc
-            })
-            empty = querySnapshot.empty
-        }).then(() => {
-            if (!empty) {
-                firestore.collection('logs').doc(doc_found.id).delete().then(() => {
-                    console.log("deleted doc")
-                    setText('')
-                    setExercises([])
-                })
-                setEmpty(true)
-                setIsOpen(false)
-            } else {
-                console.log("doc doesn't exist")
+        setLoading(true)
+        let request = new XMLHttpRequest();
+        request.onreadystatechange = (res) => {
+            if (res.target.readyState == 4 && res.target.status == 200) {
+                console.log(res.target.responseText)
+                setExercises([])
             }
-        })
+            setLoading(false)
+            
+        }
+        request.open("GET", `http://localhost:8080/bigQueryServer-1.0-SNAPSHOT/api/controller/deleteLog`, true);
+        request.send();
     }
 
     const moveExerUp = (e) => {
