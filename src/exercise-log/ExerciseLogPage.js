@@ -107,8 +107,9 @@ function ExerciseLogPage() {
         request.onreadystatechange = (res) => {
             if (res.target.readyState == 4 && res.target.status == 200) {
                 console.log(res.target.responseText)
+                setLoading(false)
             }
-            setLoading(false)
+            
         }
         request.open("GET", `http://localhost:8080/bigQueryServer-1.0-SNAPSHOT/api/controller/saveLog/exercises=${JSON.stringify(exercises)}&text=${text}`, true);
         request.send();
